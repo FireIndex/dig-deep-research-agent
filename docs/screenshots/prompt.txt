@@ -1,0 +1,25 @@
+Generate README screenshots of the Streamlit app into docs/screenshots/.
+Fake data only, no real API calls.
+
+Setup:
+- Write a demo harness in the scratchpad that runs the real app.py.
+  It picks a state from a query param and fills session_state with
+  fake data. It replaces main.run_pipeline with a fake that calls
+  on_step(...) up to the chosen stage, then sleeps, so the progress
+  screen stays frozen.
+- Start it with: streamlit run <harness> --server.port 8599 --server.headless true
+- Load the page once before shooting, so the first shot isn't the loading skeleton.
+- Use Playwright with my installed Chrome (channel="chrome"). Install
+  Playwright into the scratchpad with uv --target, not into .venv.
+- Don't use Chrome's --headless --screenshot. It captures the loading skeleton.
+- For each page: wait for [data-testid="stMainBlockContainer"], then 5 s.
+  Use device_scale_factor=2.
+
+Shots:
+01 home · 02–05 progress at grab/listen/note/chat · 06 queued (multi-user)
+07 meeting with a chat thread and 3 meetings in the sidebar · 08 full meeting page
+09 chat panel before the first question (element shot) · 10 error card (element shot)
+11 three phone-framed mobile shots side by side (home, progress, meeting)
+
+Open and look at every image. Re-shoot any that are blank or broken.
+Keep each under ~500 KB. Stop the server when done.

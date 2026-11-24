@@ -4,6 +4,57 @@ A multi-agent research assistant. Give it a topic and it searches the web, reads
 
 Built with **LangChain**, **Tavily**, **OpenAI / Groq** and **Streamlit**.
 
+![Home](docs/screenshots/01-home.png)
+
+---
+
+- [Screenshots](#screenshots)
+- [How it works](#how-it-works)
+- [Project structure](#project-structure)
+- [Getting started (local)](#getting-started-local)
+- [Environment variables](#environment-variables)
+- [Deploy on Render](#deploy-on-render)
+- [Limitations](#limitations)
+
+---
+
+## Screenshots
+
+### Live progress: every agent is visible
+
+Each card lights up while its agent works, then turns green and shows how long it took.
+
+| Scout | Reader |
+|---|---|
+| ![Scout searching](docs/screenshots/02-scout.png) | ![Reader scraping](docs/screenshots/03-reader.png) |
+| **Writer** | **Critic** |
+| ![Writer drafting](docs/screenshots/04-writer.png) | ![Critic scoring](docs/screenshots/05-critic.png) |
+
+### Score + report
+
+The critic's score and one-line verdict sit on top, with the full report underneath.
+
+![Score, verdict and report](docs/screenshots/06-result.png)
+
+| The report | Critic feedback |
+|---|---|
+| ![Generated report](docs/screenshots/07-report.png) | ![Strengths, improvements and sources](docs/screenshots/08-feedback.png) |
+
+<details>
+<summary>Full results page</summary>
+
+![Full results page](docs/screenshots/09-full-page.png)
+
+</details>
+
+If an agent fails (a bad API key, say), the page shows the error and lets you retry:
+
+![Error state](docs/screenshots/10-error.png)
+
+### Mobile
+
+![Mobile](docs/screenshots/11-mobile.png)
+
 ---
 
 ## How it works
@@ -31,7 +82,8 @@ The search and reader steps are tool-calling **agents**. The writer and critic a
 ├── tools.py        # web_search, scrape_url, date_today
 ├── pyproject.toml  # Dependencies (uv)
 ├── requirements.txt# Dependencies (pip / Render)
-└── .streamlit/     # Theme and server config
+├── .streamlit/     # Theme and server config
+└── docs/screenshots/ # Images used in this README
 ```
 
 ## Getting started (local)

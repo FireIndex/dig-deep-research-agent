@@ -78,6 +78,8 @@ h1,h2,h3,h4 {{ font-family:'Bricolage Grotesque',sans-serif !important; letter-s
 .stButton button p, .stFormSubmitButton button p, .stDownloadButton button p {{ font: inherit !important; margin:0; }}
 .stFormSubmitButton button p {{ font-size:1.3rem !important; }}
 .st-key-chips [data-testid="stColumn"] {{ min-width:0; }}
+@media (max-width: 640px) {{ .st-key-chips [data-testid="stHorizontalBlock"] {{ flex-wrap:wrap; gap:.6rem; }}
+  .st-key-chips [data-testid="stColumn"] {{ flex: 1 1 100% !important; width:100% !important; }} }}
 
 /* ── buttons ── */
 .stButton button, .stFormSubmitButton button, .stDownloadButton button {{
@@ -87,7 +89,8 @@ h1,h2,h3,h4 {{ font-family:'Bricolage Grotesque',sans-serif !important; letter-s
   transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); border-color: var(--ink); }}
 .stButton button:active, .stFormSubmitButton button:active, .stDownloadButton button:active {{
   transform: translate(3px,3px); box-shadow: 1px 1px 0 var(--ink); }}
-.stFormSubmitButton button, .stButton button[kind="primary"] {{ background: var(--lime); color: var(--ink); width:100%; margin-top:.9rem; }}
+.stFormSubmitButton button, .stButton button[kind="primary"] {{ background: var(--lime); color: var(--ink); width:100%; }}
+.stFormSubmitButton button {{ margin-top:.9rem; }}
 .stFormSubmitButton button:hover, .stButton button[kind="primary"]:hover {{ background: var(--sun); color:var(--ink); }}
 .stDownloadButton button, .stButton button[kind="secondary"] {{ background: var(--card); color: var(--ink); }}
 
@@ -142,6 +145,8 @@ h1,h2,h3,h4 {{ font-family:'Bricolage Grotesque',sans-serif !important; letter-s
 @keyframes pop {{ from {{ transform: rotate(-30deg) scale(.2); opacity:0; }} }}
 .verdict {{ display:flex; gap:1.6rem; align-items:center; margin: .6rem 0 1.8rem; }}
 .verdict q {{ font: 800 clamp(1.3rem,4vw,1.9rem)/1.1 'Bricolage Grotesque'; letter-spacing:-.03em; quotes:none; }}
+@media (max-width: 640px) {{ .verdict {{ flex-direction:column; align-items:flex-start; gap:1.2rem; }}
+  .score {{ width:120px; height:120px; }} .score b {{ font-size:2.8rem; }} }}
 .verdict small {{ display:block; font:700 .72rem 'JetBrains Mono'; letter-spacing:.16em; opacity:.5; margin-bottom:.4rem; }}
 
 .st-key-paper {{ background: var(--card); border:3px solid var(--ink); border-radius: 6px; box-shadow: 8px 8px 0 var(--ink);
@@ -374,7 +379,8 @@ with st.empty().container():
             st.markdown(r["report"])
 
         if crit["good"] or crit["fix"]:
-            li = lambda xs: "".join(f"<li>{x.replace('<', '&lt;')}</li>" for x in xs)
+            md_bold = lambda s: re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", s.replace("<", "&lt;"))
+            li = lambda xs: "".join(f"<li>{md_bold(x)}</li>" for x in xs)
             st.markdown(
                 f'<div class="two"><div class="box good"><h5>Nailed it</h5><ul>{li(crit["good"])}</ul></div>'
                 f'<div class="box fix"><h5>Needs work</h5><ul>{li(crit["fix"])}</ul></div></div>',
